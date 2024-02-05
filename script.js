@@ -3,9 +3,7 @@ const tableColumns = 28;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const amountOfWords = 5;
 const words = ['house', 'apple', 'book', 'cat', 'dog', 'mouse', 'human', 'shelf', 'knife'];
-const directions = ['right']; // , 'down', 'left', 'up'
-// let posDirec = [];
-// let cellUsed = [];
+const directions = ['right', 'down']; // 'left', 'up'
 let grid = {};
 
 class Word {
@@ -39,9 +37,10 @@ function tableBuilder (tableColumns, tableRows) {
             newCellID = `cell-${i},${x}`;
             grid[`${i},${x}`] = '';
             newCell.setAttribute('id', newCellID);
-            // newCell.innerHTML += randomChoice(letters);
             // newCell.innerHTML += (i + (x-1)*12);
-            // newCell.innerHTML += '';
+
+            // Add the event listener waiting for clicks:
+            addCellClickListener(newCell);
 
             // Append this cell to the row
             newRow.appendChild(newCell);
@@ -51,6 +50,12 @@ function tableBuilder (tableColumns, tableRows) {
         table.appendChild(newRow);
         console.log('Added new row');
     }
+}
+
+function addCellClickListener (newCell) {
+    newCell.addEventListener("click", () => {
+        newCell.classList.toggle('clicked');
+    });
 }
 
 function randomChoice (input) {
@@ -85,10 +90,10 @@ function boundCalculator (dir, wordLength) {
 
             break;
         case 'down':
-            bounds[start][x] = 1;
-            bounds[start][y] = 1;
-            bounds[end][x] = tableColumns;
-            bounds[end][y] = tableRows - wordLength + 1;
+            bounds.start.x = 1;
+            bounds.start.y = 1;
+            bounds.end.x = tableColumns;
+            bounds.end.y = tableRows - wordLength + 1;
 
             break;
         case 'left':
@@ -114,18 +119,16 @@ function boundCalculator (dir, wordLength) {
     return bounds;
 }
 
-function wordReverser (word) {
-    let wordArray = word.split();
-    let revWordArray = wordArray.reverse();
-    let reversedWord = revWordArray.join('');
-    return reversedWord;
-}
+// function wordReverser (word) {
+//     let wordArray = word.split();
+//     let revWordArray = wordArray.reverse();
+//     let reversedWord = revWordArray.join('');
+//     return reversedWord;
+// }
 
 function startPointFinder(startPointBounds, wordLength, dir) {
     let possibleCells = {};
     let choiceArray = [];
-    // let startingCellNumber = startPointBounds[start][y]*tableColumns - (tableColumns-startPointBounds[start][x]);
-    // let endingCellNumber = startPointBounds[end][y]*tableColumns - (tableColumns-startPointBounds[end][x]) + 1;
     let legalStartPoint;
 
     for (let y = startPointBounds.start.y; y <= startPointBounds.end.y; y++) {
@@ -137,7 +140,6 @@ function startPointFinder(startPointBounds, wordLength, dir) {
         }
         
     }
-    console.log(choiceArray);
 
     // Pick a random cell to start, look in its direction if its wordlength of cells are open, if not try again
     // let legal = false;
@@ -183,10 +185,11 @@ function placeWord (startPoint, dir, oldWord) {
     let word = oldWord.toUpperCase();
     let [x, y] = startPoint.split(',');
     let wordLength = word.length;
+    let letter;
     switch (dir) {
         case 'right':
             let xWL = Number(x) + wordLength
-            let letter = 0;
+            letter = 0;
             for (let i = x; i < xWL; i++) {
                 cell = document.getElementById(`cell-${i},${y}`);
                 cell.innerHTML = word[letter];
@@ -195,6 +198,14 @@ function placeWord (startPoint, dir, oldWord) {
             }
             break;
         case 'down':
+            let yWL = Number(y) + wordLength
+            letter = 0;
+            for (let i = y; i < yWL; i++) {
+                cell = document.getElementById(`cell-${x},${i}`);
+                cell.innerHTML = word[letter];
+                grid[`${x},${i}`] = word[letter];
+                letter++;
+            }
             break;
         case 'left':
             break;
@@ -225,14 +236,6 @@ function crossWord (amountOfWords) {
         }
     }
     
-
-    // for (let i in listOfWords) {
-    //     let newWord = new Word(listOfWords[i]);
-    //     console.log('Word start: ', newWord.startPoint);
-    //     console.log('Word: ', newWord.word);
-    //     placeWord(newWord.startPoint, newWord.dir, newWord.word);
-    // }
-    
     listOfWords.forEach((word) => {
         let newWord = new Word(word);
         console.log('Word start: ', newWord.startPoint);
@@ -252,98 +255,17 @@ function emptySpaceFiller () {
     }
 }
 
-// function positionFinder (word, wordLength, direction) {
-//     let randomPos;
-//     let numberOfCells = tableColumns * tableRows;
-//     let posDirecValue;
-//     let cellNumber;
-//     let cellContent;
+function clickCell () {
 
-//     // Words may start from the same position as long as they don't go into the same direction
-//     // this could cause word overwrites
-//     switch (direction) {
-//         case 'hori':
-//             while (true) {
-//                 randomPos = randomChoice(numberOfCells);
-//                 posDirecValue = `${randomPos + direction}`
-//                 if (!posDirec.includes(posDirecValue)) {
-//                     if ((randomPos + wordLength) <= tableColumns) {
-//                         cellContent = document.getElementById(`cell-${randomPos}`);
-//                         if (cellContent == word[0] || cellContent == '') {
-//                             cellNumber = randomPos;
-//                             posDirec.push(posDirecValue);
-//                             cellUsed.push(randomPos);
-//                             break;
-//                         } else {
-//                             console.log('This word overwrites');
-//                             continue;
-//                         }
-//                     } else {
-//                         console.log('Out of bounds');
-//                         continue;
-//                     }
-//                 } else {
-//                     console.log('Already used position and direction');
-//                     continue;
-//                 }
-//             }
-//             break;
-//         case 'vert':
-//             // When the word needs to go vertical
-//             while (true) {
-//                 randomPos = randomChoice(numberOfCells);
-//                 posDirecValue = `${randomPos + direction}`
-//                 if (!posDirec.includes(posDirecValue)) {
-//                     if ((randomPos + wordLength) <= tableRows) {
-//                         cellContent = document.getElementById(`cell-${randomPos}`);
-//                         if (cellContent == word[0] || cellContent == '') {
-//                             cellNumber = randomPos;
-//                             posDirec.push(posDirecValue);
-//                             cellUsed.push(randomPos);
-//                             break;
-//                         } else {
-//                             console.log('This word overwrites');
-//                             continue;
-//                         }
-//                     } else {
-//                         console.log('Out of bounds');
-//                         continue;
-//                     }
-//                 } else {
-//                     console.log('Already used position and direction');
-//                     continue;
-//                 }
-//             }
-//             break;
-//         default:
-//             break;
-//     }
-
-//     return cellNumber;
-// }
-
-// function wordPlacer (word, wordLength, direction, cellNumber) {
-//     let cellID;
-//     switch (direction) {
-//         case 'hori':
-//             for (let i = 0; i < wordLength; i++) {
-//                 cellID = `cell-${cellNumber + i}`;
-//                 cell = document.getElementById(cellID);
-//                 cell.innerHTML += word[i];
-//             }
-//             break;
-//         case 'vert':
-//             for (let i = 0; i < wordLength; i++) {
-//                 cellID = `cell-${cellNumber + (i*tableRows)}`;
-//                 cell = document.getElementById(cellID);
-//                 cell.innerHTML += word[i];
-//             }
-//             break;
-//         default:
-//             break;
-//     }
-// }
+}
 
 tableBuilder(tableColumns, tableRows);
 
 crossWord(6);
+
+// TODO:
+// x Add the click highlight function
+// - Add the click and drag function 
+// - Add the functionality that words cannot overlap
+// - Add the left and up functions as well, don't reverse the words!
+// - Add a wordPositions object with all the positions of the words. Or maybe don't return an array, but make all the positions a unique key and then let the clickDrag function make a key for the dragged word and search for this key in the wordPositions Array.

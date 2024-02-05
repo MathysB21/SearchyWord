@@ -2,6 +2,10 @@
     --heightWidth: 20px;
 }
 
+html {
+    font-family: 'Montserrat', sans-serif;
+}
+
 #crossword-grid {
     margin: 0 auto
 }
@@ -11,4 +15,14 @@ td {
     text-align: center;
     height: var(--heightWidth);
     width: var(--heightWidth);
+    border-radius: 3px;
+}
+
+td:hover {
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: aquamarine;
+    
 }
