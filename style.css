@@ -1,0 +1,14 @@
+:root {
+    --heightWidth: 20px;
+}
+
+#crossword-grid {
+    margin: 0 auto
+}
+
+td {
+    border: 1px black solid;
+    text-align: center;
+    height: var(--heightWidth);
+    width: var(--heightWidth);
+}
