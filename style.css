@@ -6,8 +6,27 @@ html {
     font-family: 'Montserrat', sans-serif;
 }
 
-#crossword-grid {
-    margin: 0 auto
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+/* #crossword-grid {
+
+} */
+
+#word-box {
+    margin-left: 20px;
+    min-width: 120px;
+    max-width: 150px;
+}
+
+#word-box li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 td {
