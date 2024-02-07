@@ -504,13 +504,15 @@ function displayTinyPopup(message, time) {
 function runWhenAllWordsFound () {
     if (wordsStillHidden == 0) {
         setTimeout(() => {
-            showConfirmationPopup();
+            showConfirmationPopup('Congratulations!');
         }, 3000);
     }
 }
 
 // Function to display the confirmation popup
-function showConfirmationPopup() {
+function showConfirmationPopup(heading) {
+    let newHeading = document.getElementById('popup-heading');
+    newHeading.innerText = heading;
     const popup = document.getElementById('confirmationPopup');
     popup.style.display = 'block';
     document.getElementById('overlay').style.display = 'block';
@@ -534,15 +536,48 @@ function hideConfirmationPopup() {
 // Function to play another round
 function playAgain () {
     hideConfirmationPopup();
+
     // Clean die crossword-grid en die word-box met die cleaner function
+    clean();
+
     // Generate the table
+    tableBuilder(tableColumns, tableRows);
+
     // Generate the words
+    crossWord(optimalAmountOfWords(sideLength));
 }
 
 // Function to play later and add button
 function playLater () {
     hideConfirmationPopup();
     // Add a button to the page that the user can click to play again, do this with a function and make it disappear when the user clicks the button. When the button is clicked it must show the confirmation popup.
+    let anotherButton = document.createElement('button');
+    anotherButton.innerText = 'Another One';
+    anotherButton.classList.add('btn');
+    anotherButton.classList.add('another-btn');
+    anotherButton.addEventListener('click', () => {
+        document.getElementById('btn-box').innerHTML = null;
+        showConfirmationPopup('Another one?👀');
+    });
+    
+    const btnbox = document.getElementById('btn-box');
+    btnbox.appendChild(anotherButton);
+}
+
+function clean () {
+    // Get the table and then get the word box
+    const table = document.getElementById('crossword-grid');
+    const wordBox = document.getElementById('word-box');
+
+    // Clean these objects
+    table.innerHTML = null;
+    wordBox.innerHTML = null;
+
+    // Clean the arrays and vars too
+    cellsUsed = [];
+    grid = {};
+    posWord = {};
+    wordsStillHidden = null;
 }
 
 // Build the table and run the crossword generator when the page loads
@@ -556,7 +591,7 @@ crossWord(optimalAmountOfWords(sideLength));
 // x Add the left and up functions as well, don't reverse the words!
 // x Add a wordPositions object with all the positions of the words. Or maybe don't return an array, but make all the positions a unique key and then let the clickDrag function make a key for the dragged word and search for this key in the wordPositions Array.
 // x Add Success popup if word is found and add an oops popup if the person didn't drag over a word
-// - Add a function that clears the clicked, but wait until the user doesn't interact with the grid and if the clicked letters match a word give success, otherwise clear the clicked cells and display oops
+// ! Add a function that clears the clicked, but wait until the user doesn't interact with the grid and if the clicked letters match a word give success, otherwise clear the clicked cells and display oops
 // x Add a reveal, unReveal and reveal5Seconds function
 // x Add a block that lists the words to be found
 // - Add a difficulty level. 5 Levels, some give you the list of words, others reduce the words and increase the gap between cells
@@ -570,6 +605,8 @@ crossWord(optimalAmountOfWords(sideLength));
 // - Figure out how to export and import function to make this main js file look neater
 // - Add function to stop trying to add a word if it can't fit after like 10 tries. Then choose a new word
 // - Add a check so that words that are longer than the sideLength cannot be chosen
-// - Add a check to disallow the tiny popups after the game was completed and if not clicked inside the table
+// - Add a check to disallow the tiny popups after the game was completed and if not clicked inside the table. Do this by adding a check that the user clicked inside the table element.
 // - Add the playAgain and playLater functions
 // - Add the cleaner function
+// - Add JSDoc strings om functions te verduidelik
+// - Fix bug where multiple another one buttons appear if you just keep clicking no, it's okay - instead of deleting and creating the button, put it in html and change the display property
