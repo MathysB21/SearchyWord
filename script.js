@@ -1,5 +1,5 @@
 const sideLength = 21; // min 12, max 110, 21 is optimal for most screens
-const areaPerWord = 32; // Reducing will make the words more dense, but can cause issues when the sideLength goes too low
+const areaPerWord = 26; // Reducing will make the words more dense, but can cause issues when the sideLength goes too low, 32 is optimal
 const tableRows = sideLength;
 const tableColumns = sideLength;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -15,8 +15,19 @@ let posWord = {}
 let wordsStillHidden;
 const successMessages = ['Hey, you found a word!', 'Nice! That\'s a word!', 'Yup, you got one!', 'Yes indeed, that\'s a word!', 'Cool beans, you found a word!', 'Yay! That\'s a word!', 'Yes! You got one', 'Nicely done!', 'You got one!', 'Good eye!'];
 const failMessages = ['Oops!', 'Nope!', 'Unfortunately not!', 'Sadly not...', 'You were so close!', 'I didn\'t put it there...', 'Just missed it!', 'So close!', 'Almost had it!'];
+let listOfWords = [];
+let wordObject = {};
+let indexOfLastDeletedWord;
+
 const playAgainButton = document.getElementById('playAgain');
 const playLaterButton = document.getElementById('playLater');
+// Add event listeners to the playAgain and playLater buttons
+playAgainButton.addEventListener('click',() => {
+    playAgain();
+});
+playLaterButton.addEventListener('click',() => {
+    playLater();
+});
 
 class Word {
     constructor (wordInput) {
@@ -24,7 +35,51 @@ class Word {
         this.wordLength = this.word.length;
         this.dir = randomChoice(directions)
         this.startPointBounds = boundCalculator(this.dir, this.wordLength);
-        this.startPoint = startPointFinder(this.startPointBounds, this.wordLength, this.dir);
+        this.startPoint = this.findStartPoint();
+    }
+
+    chooseNewWord () {
+        this.word = randomChoice(words);
+        console.log('Chose a new word: ', this.word);
+    }
+
+    changeWord() {
+        const oldWord = this.word;
+        // Choose a new word
+        this.chooseNewWord();
+        this.wordLength = this.word.length; // Update word length
+
+        // Remove current word from the listOfWords
+        const index = listOfWords.indexOf(oldWord);
+        indexOfLastDeletedWord = index;
+        const deleted = listOfWords.splice(index, 1, this.word);
+        console.log('Deleted word: ', deleted);
+        // console.log('Array after deletion: ', listOfWords);
+
+        // Add the new word to the list of words
+        // listOfWords.push(this.word);
+        console.log('Array after addition: ', listOfWords);
+    }
+
+    findStartPoint() {
+        let tryCount = 0;
+        while (tryCount < 20) { // Try maximum of 20 times (10 per direction)
+            const startPoint = startPointFinder(this.startPointBounds, this.wordLength, this.dir, this.word);
+            if (startPoint) {
+                this.startPoint = startPoint;
+                return startPoint;
+            }
+            tryCount++;
+            if (tryCount % 10 === 0) { // Change direction every 10 tries
+                this.dir = randomChoice(directions);
+                this.startPointBounds = boundCalculator(this.dir, this.wordLength);
+            }
+        }
+        // If unable to find a suitable spot, choose a new word
+        this.word = this.changeWord(); // Choose a new word
+        
+        this.startPointBounds = boundCalculator(this.dir, this.wordLength); // Recalculate bounds
+        return this.findStartPoint(); // Recursively try again with new word
     }
 }
 
@@ -136,7 +191,7 @@ function boundCalculator (dir, wordLength) {
     return bounds;
 }
 
-function startPointFinder(startPointBounds, wordLength, dir) {
+function startPointFinder(startPointBounds, wordLength, dir, word) {
     let possibleCells = {};
     let choiceArray = [];
     let legalStartPoint;
@@ -153,14 +208,18 @@ function startPointFinder(startPointBounds, wordLength, dir) {
 
     let goodSpotToStart;
     let isLegal = false;
+    let counter = 0;
     while (!isLegal) {
         // Find an empty start pos
         let emptyPos = findEmptyPos(choiceArray, possibleCells);
 
-        isLegal = findGoodSpot(emptyPos, wordLength, dir);
+        isLegal = findGoodSpot(emptyPos, wordLength, dir, word);
         if (isLegal) {
             goodSpotToStart = emptyPos;
+        } else if (counter == 5) {
+            return null;
         }
+        counter++;
     }
 
     legalStartPoint = goodSpotToStart;
@@ -168,7 +227,7 @@ function startPointFinder(startPointBounds, wordLength, dir) {
     return legalStartPoint;
 }
 
-function findGoodSpot (startPoint, wordLength, dir) {
+function findGoodSpot (startPoint, wordLength, dir, word) {
     let [x, y] = startPoint.split(',');
     let xWL;
     let yWL;
@@ -222,7 +281,6 @@ function findGoodSpot (startPoint, wordLength, dir) {
 }
 
 function findEmptyPos (choiceArray, possibleCells) {
-    // Pick a random empty cell to start, look in its direction if its wordlength of cells are open, if not try again
     let randEmpty = false;
     let pos;
     let emptyPos;
@@ -238,6 +296,11 @@ function findEmptyPos (choiceArray, possibleCells) {
 }
 
 function placeWord (startPoint, dir, oldWord) {
+    // console.log(oldWord);
+    if (oldWord == undefined) {
+        oldWord = listOfWords[indexOfLastDeletedWord];
+        console.log('Undefined word replaced with actual word: ', oldWord);
+    }
     let word = oldWord.toUpperCase().trim();
     let [x, y] = startPoint.split(',');
     let wordLength = word.length;
@@ -307,31 +370,24 @@ function placeWord (startPoint, dir, oldWord) {
 }
 
 function crossWord (amountOfWords) {
-    let listOfWords = [];
-    let allUniqueWords = false;
-    let howManyToAdd = amountOfWords;
     wordsStillHidden = amountOfWords;
 
-    while (!allUniqueWords) {
-        for (let i = 1; i <= howManyToAdd; i++) {
-            listOfWords.push(randomChoice(words));
-        }
+    while (listOfWords.length < amountOfWords) {
+        const wordChoice = randomChoice(words);
 
-        listOfWords = [...new Set(listOfWords)];
-
-        if (listOfWords.length == amountOfWords) {
-            console.log(listOfWords);
-            allUniqueWords = true;
-        } else {
-            howManyToAdd = amountOfWords - listOfWords.length;
+        if (wordChoice.length <= sideLength && !listOfWords.includes(wordChoice)) {
+            listOfWords.push(wordChoice);
         }
     }
-    
-    listOfWords.forEach((word) => {
+    console.log("List of the words: ", listOfWords);
+
+    for (let index = 0; index < listOfWords.length; index++) {
+        const word = listOfWords[index];
         let newWord = new Word(word);
         placeWord(newWord.startPoint, newWord.dir, newWord.word);
-    });
-
+        wordObject[word] = newWord;
+    }
+    console.log("List of the words: ", listOfWords);
     displayWordsToFind(listOfWords);
     emptySpaceFiller();
 }
@@ -476,8 +532,9 @@ function checkForWord(selectedCellIDs) {
         wordsStillHidden--;
         runWhenAllWordsFound();
         return true;
-    } else {
+    } else if (cellIDNoDups.length > 2) {
         // Put in a failure toast: Oops, you might have found a word, but I didn't put it there. Here's a cookie 🍪
+        console.log("CellIDs that caused a fail in check for word: ", cellIDNoDups);
         displayTinyPopup(randomChoice(failMessages), 2);
         return false;
     }    
@@ -505,7 +562,7 @@ function runWhenAllWordsFound () {
     if (wordsStillHidden == 0) {
         setTimeout(() => {
             showConfirmationPopup('Congratulations!');
-        }, 3000);
+        }, 2500);
     }
 }
 
@@ -516,14 +573,6 @@ function showConfirmationPopup(heading) {
     const popup = document.getElementById('confirmationPopup');
     popup.style.display = 'block';
     document.getElementById('overlay').style.display = 'block';
-
-    // Add event listeners to the playAgain and playLater buttons
-    playAgainButton.addEventListener('click',() => {
-        playAgain();
-    });
-    playLaterButton.addEventListener('click',() => {
-        playLater();
-    });
 }
 
 // Function to hide the confirmation popup
@@ -536,7 +585,6 @@ function hideConfirmationPopup() {
 // Function to play another round
 function playAgain () {
     hideConfirmationPopup();
-
     // Clean die crossword-grid en die word-box met die cleaner function
     clean();
 
@@ -551,17 +599,13 @@ function playAgain () {
 function playLater () {
     hideConfirmationPopup();
     // Add a button to the page that the user can click to play again, do this with a function and make it disappear when the user clicks the button. When the button is clicked it must show the confirmation popup.
-    let anotherButton = document.createElement('button');
-    anotherButton.innerText = 'Another One';
-    anotherButton.classList.add('btn');
-    anotherButton.classList.add('another-btn');
+    let anotherButton = document.getElementById('anotherOne');
+    anotherButton.style.display = 'inline-block';
     anotherButton.addEventListener('click', () => {
-        document.getElementById('btn-box').innerHTML = null;
         showConfirmationPopup('Another one?👀');
+        const anotherbtn = document.getElementById('anotherOne');
+        anotherbtn.style.display = 'none';
     });
-    
-    const btnbox = document.getElementById('btn-box');
-    btnbox.appendChild(anotherButton);
 }
 
 function clean () {
@@ -578,6 +622,8 @@ function clean () {
     grid = {};
     posWord = {};
     wordsStillHidden = null;
+    listOfWords = [];
+    indexOfLastDeletedWord = null;
 }
 
 // Build the table and run the crossword generator when the page loads
@@ -603,10 +649,14 @@ crossWord(optimalAmountOfWords(sideLength));
 // - Add function where random words can start from other words' letters
 // x Add the function that keeps words selected when they're found and strikethrough's the word in the word box
 // - Figure out how to export and import function to make this main js file look neater
-// - Add function to stop trying to add a word if it can't fit after like 10 tries. Then choose a new word
-// - Add a check so that words that are longer than the sideLength cannot be chosen
-// - Add a check to disallow the tiny popups after the game was completed and if not clicked inside the table. Do this by adding a check that the user clicked inside the table element.
-// - Add the playAgain and playLater functions
-// - Add the cleaner function
+// x Add function to stop trying to add a word if it can't fit after like 10 tries. Then choose a new word
+// x Add a check so that words that are longer than the sideLength cannot be chosen
+// x Add a check to disallow the tiny popups after the game was completed and if not clicked inside the table. Do this by adding a check that the user clicked inside the table element.
+// x Add the playAgain and playLater functions
+// x Add the cleaner function
 // - Add JSDoc strings om functions te verduidelik
-// - Fix bug where multiple another one buttons appear if you just keep clicking no, it's okay - instead of deleting and creating the button, put it in html and change the display property
+// x Fix bug where multiple another one buttons appear if you just keep clicking no, it's okay - instead of deleting and creating the button, put it in html and change the display property
+// - Add a hint system where you get one hint for every 4 words found
+// - Add a print system where you can print one or more word search puzzle to a PDF
+// - Add themes that the user can choose from
+// x Fix bug where the playAgain will get triggered the amount of times the user has played the game after clicking the playAgain button
