@@ -3,8 +3,8 @@ const areaPerWord = 26; // Reducing will make the words more dense, but can caus
 const tableRows = sideLength;
 const tableColumns = sideLength;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const words = ['Halibut', 'Lystrosaurus', 'Stonefish', 'Alligator', 'Dachshund', 'Kiwi', 'Rhinoceros', 'Tigerfish', 'Brachiosaurus', 'Yorkie', 'Wasp', 'Sheep', 'Wallaby', 'Armadillo', 'Guppy', 'Fossa', 'Anteosaurus', 'Anaconda', 'Jackal', 'Dalmatian', 'Llama', 'Goldfish', 'Shrimp', 'Emu', 'Hamster', 'Nightingale', 'Hawk', 'Kudu', 'Chinook', 'Pomeranian', 'Hummingbird', 'Civet', 'Lizard', 'Basset', 'Chihuahua', 'Falcon', 'Heron', 'Eel', 'Quagga', 'Elephant', 'Anteater', 'Doberman', 'Grouper', 'Megalodon', 'Jaguar', 'Raccoon', 'Prawn', 'Goldeneye', 'Dragonfly', 'Quail', 'Caracal', 'Butterfly', 'Limpet', 'Bat', 'Jellyfish', 'Reindeer', 'Cow', 'Triggerfish', 'Panther', 'Axolotl', 'Stingray', 'Frigatebird', 'Titanoboa', 'Alsatian', 'Peacock', 'Ant', 'Anglerfish', 'Mockingbird', 'Ragamuffin', 'Bowfin', 'Puma', 'Labrador', 'Tuna', 'Herring', 'Bluegill', 'Sparrow', 'Gerbil', 'Porcupine', 'Wolf', 'Mamba', 'Hornbill', 'Foxhound', 'Impala', 'Yak', 'Pelican', 'Blobfish', 'Pachycephalosaurus', 'Gazelle', 'Robin', 'Toad', 'Marmoset', 'Ragdoll', 'Crab', 'Crayfish', 'Warbler', 'Gecko', 'Kingfisher', 'Monitor', 'Bluebird', 'Bird', 'Beaver', 'Turtle', 'Malamute', 'Springbok', 'Archerfish', 'Boerboel', 'Seagull', 'Dolphin', 'Baboon', 'Siamese', 'Goat', 'Monkey', 'Ladybug', 'Shark', 'Schnauzer', 'Bandicoot', 'Firefly', 'Amargasaurus', 'Warthog', 'Starling', 'Shepherd', 'Stork', 'Pug', 'Walrus', 'Bison', 'Carp', 'Parakeet', 'Puffin', 'Bluefish', 'Swordfish', 'Tortoise', 'Shrew', 'Moth', 'Angelfish', 'Ape', 'Platypus', 'Mastiff', 'Mandrill', 'Roadrunner', 'Serval', 'Dog', 'Ceratosaurus', 'Mackerel', 'Cougar', 'Newt', 'Wildebeest', 'Chicken', 'Abyssinian', 'Bee', 'Allosaurus', 'Klipspringer', 'Lion', 'Masiakasaurus', 'Centipede', 'Lemur', 'Duck', 'Moose', 'Seahorse', 'Starfish', 'Styracosaurus', 'Maltese', 'Clownfish', 'Pointer', 'Sphynx', 'Brontosaurus', 'Hyena', 'Sloth', 'Boomslang', 'Wolverine', 'Catfish', 'Deer', 'Bass', 'Adder', 'Pangolin', 'Seal', 'Narwhal', 'Elasmosaurus', 'Bullfrog', 'Cobra', 'Oxpecker', 'Sparrowhawk', 'Ox', 'Mauzer', 'Cheetah', 'Egret', 'Camel', 'Badger', 'Bloodhound', 'Lobster', 'Lionfish', 'Ibex', 'Kangaroo', 'Hippopotamus', 'Meerkat', 'Donkey', 'Krill', 'Eagle', 'Antelope', 'Mole', 'Hornet', 'Giraffe', 'Squid ', 'Beetle', 'Burmese', 'Snake', 'Koala', 'Scorpion', 'Flycatcher', 'Bear', 'Mongrel', 'Caterpillar', 'Octopus', 'Dingo', 'Wombat', 'Viper', 'Swan', 'Barracuda', 'Cockatoo', 'Hainosaurus', 'Mammoth', 'Dodo', 'Buffalo', 'Raven', 'Capybara', 'Canary', 'Swallow', 'Bulldog', 'Rat', 'Tapir', 'Flamingo', 'Lyrebird', 'Human', 'Koi', 'Cricket', 'Pufferfish', 'Possum', 'Siberian', 'Nautilus', 'Orangutan', 'Panda', 'Hedgehog', 'Beagle', 'Weasel', 'Whale', 'Penguin', 'Sardines', 'Hare', 'Rattlesnake', 'Piranha', 'Vulture', 'Tiger', 'Firehawk', 'Haddock', 'Mule', 'Pterodactyl', 'Kookaburra', 'Bobcat', 'Velociraptor', 'Gopher', 'Bully', 'Otter', 'Fish', 'Bullmastiff', 'Bullsnake', 'Chameleon', 'Trout', 'Sailfish', 'Iguana', 'Liger', 'Sturgeon', 'Tarantula', 'Poodle', 'Ray', 'Ostrich', 'Mongoose', 'Goose', 'Magpie', 'Anchovies', 'Terrier', 'Elk', 'Boa', 'Yellowfin', 'Codfish', 'Fox', 'Marlin', 'Ibis', 'Woodpecker', 'Sheepdog', 'Gorilla', 'Collie', 'Ferret', 'Jackrabbit', 'Copperhead', 'Barosaurus', 'Leopard', 'Pig', 'Bumblebee', 'Spaniel', 'Lynx', 'Frog', 'Ocelot', 'Greyhound', 'Cassowary', 'Pheasant', 'Chipmunk', 'Cockroach', 'Caribou', 'Cockle', 'Retriever', 'Oyster', 'Fowl', 'Hoopoe', 'Hartebeest', 'Dilophosaurus', 'Labradoodle', 'Cicada', 'Mantis', 'Rabbit', 'Buzzard', 'Grasshopper', 'Macaw', 'Mouse', 'Kingklip', 'Parrotfish', 'Squirrel', 'Waterbuck', 'Chilesaurus', 'Wildcat', 'Perch', 'Okapi', 'Mosasaurus', 'Skunk', 'Zebra', 'Earthworm', 'Squid', 'Puffer', 'Nguni', 'Sunfish', 'Manatee', 'Cryolophosaurus', 'Chinchilla', 'Parrot', 'Horse', 'Swallowtail', 'Chimpanzee', 'Albatross', 'Snail', 'Aardvark', 'Cockatiel', 'Nyala', 'Whippet', 'Coyote', 'Alpaca', 'Boxer', 'Fisher', 'Hound', 'Toucan', 'Crane', 'Capuchin', 'Angelshark', 'Crocodile', 'Owl', 'Eland', 'Turkey', 'Kakapo', 'Husky', 'Cat', 'Magyarosaurus', 'Salamander', 'Marmot', 'Rottweiler', 'Cottonmouth', 'Pigeon', 'Cod', 'Python', 'Osprey', 'Salmon', 'Crow'];
-const directions = ['right', 'down', 'left', 'up'];
+const words = ['Halibut', 'Lystrosaurus', 'Stonefish', 'Alligator', 'Dachshund', 'Kiwi', 'Rhinoceros', 'Tigerfish', 'Brachiosaurus', 'Yorkie', 'Wasp', 'Sheep', 'Wallaby', 'Armadillo', 'Guppy', 'Fossa', 'Anteosaurus', 'Anaconda', 'Jackal', 'Dalmatian', 'Llama', 'Goldfish', 'Shrimp', 'Emu', 'Hamster', 'Nightingale', 'Hawk', 'Kudu', 'Chinook', 'Pomeranian', 'Hummingbird', 'Civet', 'Lizard', 'Basset', 'Chihuahua', 'Falcon', 'Heron', 'Eel', 'Quagga', 'Elephant', 'Anteater', 'Doberman', 'Grouper', 'Megalodon', 'Jaguar', 'Raccoon', 'Prawn', 'Goldeneye', 'Dragonfly', 'Quail', 'Caracal', 'Butterfly', 'Limpet', 'Bat', 'Jellyfish', 'Reindeer', 'Cow', 'Triggerfish', 'Panther', 'Axolotl', 'Stingray', 'Frigatebird', 'Titanoboa', 'Alsatian', 'Peacock', 'Ant', 'Anglerfish', 'Mockingbird', 'Ragamuffin', 'Bowfin', 'Puma', 'Labrador', 'Tuna', 'Herring', 'Bluegill', 'Sparrow', 'Gerbil', 'Porcupine', 'Wolf', 'Mamba', 'Hornbill', 'Foxhound', 'Impala', 'Yak', 'Pelican', 'Blobfish', 'Pachycephalosaurus', 'Gazelle', 'Robin', 'Toad', 'Marmoset', 'Ragdoll', 'Crab', 'Crayfish', 'Warbler', 'Gecko', 'Kingfisher', 'Monitor', 'Bluebird', 'Bird', 'Beaver', 'Turtle', 'Malamute', 'Springbok', 'Archerfish', 'Boerboel', 'Seagull', 'Dolphin', 'Baboon', 'Siamese', 'Goat', 'Monkey', 'Ladybug', 'Shark', 'Schnauzer', 'Bandicoot', 'Firefly', 'Amargasaurus', 'Warthog', 'Starling', 'Shepherd', 'Stork', 'Pug', 'Walrus', 'Bison', 'Carp', 'Parakeet', 'Puffin', 'Bluefish', 'Swordfish', 'Tortoise', 'Shrew', 'Moth', 'Angelfish', 'Ape', 'Platypus', 'Mastiff', 'Mandrill', 'Roadrunner', 'Serval', 'Dog', 'Ceratosaurus', 'Mackerel', 'Cougar', 'Newt', 'Wildebeest', 'Chicken', 'Abyssinian', 'Bee', 'Allosaurus', 'Klipspringer', 'Lion', 'Masiakasaurus', 'Centipede', 'Lemur', 'Duck', 'Moose', 'Seahorse', 'Starfish', 'Styracosaurus', 'Maltese', 'Clownfish', 'Pointer', 'Sphynx', 'Brontosaurus', 'Hyena', 'Sloth', 'Boomslang', 'Wolverine', 'Catfish', 'Deer', 'Bass', 'Adder', 'Pangolin', 'Seal', 'Narwhal', 'Elasmosaurus', 'Bullfrog', 'Cobra', 'Oxpecker', 'Sparrowhawk', 'Ox', 'Mauzer', 'Cheetah', 'Egret', 'Camel', 'Badger', 'Bloodhound', 'Lobster', 'Lionfish', 'Ibex', 'Kangaroo', 'Hippopotamus', 'Meerkat', 'Donkey', 'Krill', 'Eagle', 'Antelope', 'Mole', 'Hornet', 'Giraffe', 'Squid', 'Beetle', 'Burmese', 'Snake', 'Koala', 'Scorpion', 'Flycatcher', 'Bear', 'Mongrel', 'Caterpillar', 'Octopus', 'Dingo', 'Wombat', 'Viper', 'Swan', 'Barracuda', 'Cockatoo', 'Hainosaurus', 'Mammoth', 'Dodo', 'Buffalo', 'Raven', 'Capybara', 'Canary', 'Swallow', 'Bulldog', 'Rat', 'Tapir', 'Flamingo', 'Lyrebird', 'Human', 'Koi', 'Cricket', 'Pufferfish', 'Possum', 'Siberian', 'Nautilus', 'Orangutan', 'Panda', 'Hedgehog', 'Beagle', 'Weasel', 'Whale', 'Penguin', 'Sardines', 'Hare', 'Rattlesnake', 'Piranha', 'Vulture', 'Tiger', 'Firehawk', 'Haddock', 'Mule', 'Pterodactyl', 'Kookaburra', 'Bobcat', 'Velociraptor', 'Gopher', 'Bully', 'Otter', 'Fish', 'Bullmastiff', 'Bullsnake', 'Chameleon', 'Trout', 'Sailfish', 'Iguana', 'Liger', 'Sturgeon', 'Tarantula', 'Poodle', 'Ray', 'Ostrich', 'Mongoose', 'Goose', 'Magpie', 'Anchovies', 'Terrier', 'Elk', 'Boa', 'Yellowfin', 'Codfish', 'Fox', 'Marlin', 'Ibis', 'Woodpecker', 'Sheepdog', 'Gorilla', 'Collie', 'Ferret', 'Jackrabbit', 'Copperhead', 'Barosaurus', 'Leopard', 'Pig', 'Bumblebee', 'Spaniel', 'Lynx', 'Frog', 'Ocelot', 'Greyhound', 'Cassowary', 'Pheasant', 'Chipmunk', 'Cockroach', 'Caribou', 'Cockle', 'Retriever', 'Oyster', 'Fowl', 'Hoopoe', 'Hartebeest', 'Dilophosaurus', 'Labradoodle', 'Cicada', 'Mantis', 'Rabbit', 'Buzzard', 'Grasshopper', 'Macaw', 'Mouse', 'Kingklip', 'Parrotfish', 'Squirrel', 'Waterbuck', 'Chilesaurus', 'Wildcat', 'Perch', 'Okapi', 'Mosasaurus', 'Skunk', 'Zebra', 'Earthworm', 'Puffer', 'Nguni', 'Sunfish', 'Manatee', 'Cryolophosaurus', 'Chinchilla', 'Parrot', 'Horse', 'Swallowtail', 'Chimpanzee', 'Albatross', 'Snail', 'Aardvark', 'Cockatiel', 'Nyala', 'Whippet', 'Coyote', 'Alpaca', 'Boxer', 'Fisher', 'Hound', 'Toucan', 'Crane', 'Capuchin', 'Angelshark', 'Crocodile', 'Owl', 'Eland', 'Turkey', 'Kakapo', 'Husky', 'Cat', 'Magyarosaurus', 'Salamander', 'Marmot', 'Rottweiler', 'Cottonmouth', 'Pigeon', 'Cod', 'Python', 'Osprey', 'Salmon', 'Crow'];
+const directions = ['upright', 'downright', 'downleft', 'upleft', 'right', 'down', 'left', 'up'];
 let cellsUsed = [];
 let lettersRevealed = [];
 let grid = {};
@@ -18,16 +18,6 @@ const failMessages = ['Oops!', 'Nope!', 'Unfortunately not!', 'Sadly not...', 'Y
 let listOfWords = [];
 let wordObject = {};
 let indexOfLastDeletedWord;
-
-const playAgainButton = document.getElementById('playAgain');
-const playLaterButton = document.getElementById('playLater');
-// Add event listeners to the playAgain and playLater buttons
-playAgainButton.addEventListener('click',() => {
-    playAgain();
-});
-playLaterButton.addEventListener('click',() => {
-    playLater();
-});
 
 class Word {
     constructor (wordInput) {
@@ -63,7 +53,7 @@ class Word {
 
     findStartPoint() {
         let tryCount = 0;
-        while (tryCount < 20) { // Try maximum of 20 times (10 per direction)
+        while (tryCount < 40) { // Try maximum of 40 times (10 per direction)
             const startPoint = startPointFinder(this.startPointBounds, this.wordLength, this.dir, this.word);
             if (startPoint) {
                 this.startPoint = startPoint;
@@ -185,6 +175,34 @@ function boundCalculator (dir, wordLength) {
             bounds.end.y = tableRows;
 
             break;
+        case 'downright':
+            bounds.start.x = 1;
+            bounds.start.y = 1;
+            bounds.end.x = tableColumns - wordLength + 1;
+            bounds.end.y = tableRows - wordLength + 1;
+
+            break;
+        case 'downleft':
+            bounds.start.x = wordLength;
+            bounds.start.y = 1;
+            bounds.end.x = tableColumns;
+            bounds.end.y = tableRows - wordLength + 1;
+
+            break;
+        case 'upleft':
+            bounds.start.x = wordLength;
+            bounds.start.y = wordLength;
+            bounds.end.x = tableColumns;
+            bounds.end.y = tableRows;
+
+            break;
+        case 'upright':
+            bounds.start.x = 1;
+            bounds.start.y = wordLength;
+            bounds.end.x = tableColumns - wordLength + 1;
+            bounds.end.y = tableRows;
+
+            break;
         default:
             break;
     }
@@ -206,16 +224,19 @@ function startPointFinder(startPointBounds, wordLength, dir, word) {
         
     }
 
+    console.log(`The cells we can choose from for ${word}: `,choiceArray);
+
     let goodSpotToStart;
     let isLegal = false;
     let counter = 0;
     while (!isLegal) {
         // Find an empty start pos
-        let emptyPos = findEmptyPos(choiceArray, possibleCells);
+        let emptyPos = findEmptyPos(choiceArray, possibleCells, word);
 
         isLegal = findGoodSpot(emptyPos, wordLength, dir, word);
         if (isLegal) {
             goodSpotToStart = emptyPos;
+            console.log(`This is a good spot to place ${word}: `, emptyPos);
         } else if (counter == 5) {
             return null;
         }
@@ -231,46 +252,138 @@ function findGoodSpot (startPoint, wordLength, dir, word) {
     let [x, y] = startPoint.split(',');
     let xWL;
     let yWL;
+    let xyWL;
     let cellsEmpty = [];
+    let counter = 0;
+    let ythLetter;
     switch (dir) {
         case 'right':
             xWL = Number(x) + wordLength
             for (let i = x; i < xWL; i++) {
-                if (grid[`${i},${y}`] == '') {
+                if (grid[`${i},${y}`] == '' || grid[`${i},${y}`] == word[counter]) {
+                    if (grid[`${i},${y}`] == word[counter]) {
+                        console.log('Letters matched!', `${i},${y}`);
+                        // colourCell(`cell-${i},${y}`);
+                    }
                     cellsEmpty.push(true)
                 } else {
                     cellsEmpty.push(false)
                 }
+                counter++;
             }
             break;
         case 'down':
             yWL = Number(y) + wordLength
             for (let i = y; i < yWL; i++) {
-                if (grid[`${x},${i}`] == '') {
+                if (grid[`${x},${i}`] == '' || grid[`${x},${i}`] == word[counter]) {
+                    if (grid[`${x},${i}`] == word[counter]) {
+                        console.log('Letters matched!', `${x},${i}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
                     cellsEmpty.push(true)
                 } else {
                     cellsEmpty.push(false)
                 }
+                counter++;
             }
             break;
         case 'left':
             xWL = Number(x) - wordLength
             for (let i = x; i > xWL; i--) {
-                if (grid[`${i},${y}`] == '') {
+                if (grid[`${i},${y}`] == '' || grid[`${i},${y}`] == word[counter]) {
+                    if (grid[`${i},${y}`] == word[counter]) {
+                        console.log('Letters matched!', `${i},${y}`);
+                        // colourCell(`cell-${i},${y}`);
+                    }
                     cellsEmpty.push(true)
                 } else {
                     cellsEmpty.push(false)
                 }
+                counter++;
             }
             break;
         case 'up':
             yWL = Number(y) - wordLength
             for (let i = y; i > yWL; i--) {
-                if (grid[`${x},${i}`] == '') {
+                if (grid[`${x},${i}`] == '' || grid[`${x},${i}`] == word[counter]) {
+                    if (grid[`${x},${i}`] == word[counter]) {
+                        console.log('Letters matched!', `${x},${i}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
                     cellsEmpty.push(true)
                 } else {
                     cellsEmpty.push(false)
                 }
+                counter++;
+            }
+            break;
+        case 'downright':
+            xyWL = Number(x) + wordLength; // You can use xyWL if x and y change at the same rate and in the same direction
+            for (let i = x; i < xyWL; i++) {
+                ythLetter = Number(y) + counter;
+                if (grid[`${i},${ythLetter}`] == '' || grid[`${i},${ythLetter}`] == word[counter]) {
+                    if (grid[`${i},${ythLetter}`] == word[counter]) {
+                        console.log('Letters matched!', `${i},${ythLetter}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
+                    cellsEmpty.push(true);
+                } else {
+                    cellsEmpty.push(false);
+                }
+                counter++;
+            }
+            break;
+        case 'downleft':
+            xWL = Number(x) - wordLength; // x reduces, y increases
+            yWL = Number(y) + wordLength;
+            let xcounter = Number(x);
+            for (let i = y; i < yWL; i++) {
+                if (grid[`${xcounter},${i}`] == '' || grid[`${xcounter},${i}`] == word[counter]) {
+                    if (grid[`${xcounter},${i}`] == word[counter]) {
+                        console.log('Letters matched!', `${xcounter},${i}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
+                    cellsEmpty.push(true)
+                } else {
+                    cellsEmpty.push(false)
+                }
+                counter++;
+                xcounter--;
+            }
+            break;
+        case 'upleft':
+            xyWL = Number(x) - wordLength; // You can use xyWL if x and y change at the same rate and in the same direction
+            for (let i = x; i > xyWL; i--) {
+                ythLetter = Number(y) + counter;
+                if (grid[`${i},${ythLetter}`] == '' || grid[`${i},${ythLetter}`] == word[counter]) {
+                    if (grid[`${i},${ythLetter}`] == word[counter]) {
+                        console.log('Letters matched!', `${i},${ythLetter}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
+                    cellsEmpty.push(true);
+                } else {
+                    cellsEmpty.push(false);
+                }
+                counter++;
+            }
+            break;
+        case 'upright':
+            xWL = Number(x) + wordLength; // x reduces, y increases
+            yWL = Number(y) - wordLength;
+            let ycounter = Number(y);
+            for (let i = x; i < xWL; i++) {
+                if (grid[`${i},${ycounter}`] == '' || grid[`${i},${ycounter}`] == word[counter]) {
+                    if (grid[`${i},${ycounter}`] == word[counter]) {
+                        console.log('Letters matched!', `${i},${ycounter}`);
+                        // colourCell(`cell-${x},${i}`);
+                    }
+                    cellsEmpty.push(true)
+                } else {
+                    cellsEmpty.push(false)
+                }
+                console.log(`${i},${ycounter}`);
+                counter++;
+                ycounter--;
             }
             break;
     }
@@ -280,18 +393,17 @@ function findGoodSpot (startPoint, wordLength, dir, word) {
     });
 }
 
-function findEmptyPos (choiceArray, possibleCells) {
+function findEmptyPos (choiceArray, possibleCells, word) {
     let randEmpty = false;
     let pos;
     let emptyPos;
     while (!randEmpty) {
         pos = randomChoice(choiceArray);
-        if (possibleCells[pos] == '') {
+        if (possibleCells[pos] == '' || possibleCells[pos] == word[0]) {
             emptyPos = pos;
             randEmpty = true;
         }
     }
-
     return emptyPos;
 }
 
@@ -305,10 +417,12 @@ function placeWord (startPoint, dir, oldWord) {
     let [x, y] = startPoint.split(',');
     let wordLength = word.length;
     let letter;
+    let xyWL;
     let xWL;
     let yWL;
     let placedWordPos = [];
     let key;
+    let ythLetter;
     switch (dir) {
         case 'right':
             xWL = Number(x) + wordLength
@@ -362,6 +476,74 @@ function placeWord (startPoint, dir, oldWord) {
                 cellsUsed.push(`cell-${x},${i}`);
                 placedWordPos.push(`cell-${x},${i}`);
                 letter++;
+            }
+            key = placedWordPos.join('.');
+            posWord[key] = oldWord.trim();
+            break;
+        case 'downright':
+            xyWL = Number(x) + wordLength; // You can use xyWL if x and y change at the same rate and in the same direction
+            letter = 0;
+            for (let i = x; i < xyWL; i++) {
+                ythLetter = Number(y) + letter;
+                console.log(`cell-${i},${ythLetter}`);
+                
+                cell = document.getElementById(`cell-${i},${ythLetter}`);
+                cell.innerHTML = word[letter];
+                grid[`${i},${ythLetter}`] = word[letter];
+                cellsUsed.push(`cell-${i},${ythLetter}`);
+                placedWordPos.push(`cell-${i},${ythLetter}`);
+                letter++;
+            }
+            key = placedWordPos.join('.');
+            posWord[key] = oldWord.trim();
+            break;
+        case 'downleft':
+            xWL = Number(x) - wordLength; // x reduces, y increases
+            yWL = Number(y) + wordLength;
+            let xcounter = Number(x);
+            letter = 0;
+            for (let i = y; i < yWL; i++) {
+                cell = document.getElementById(`cell-${xcounter},${i}`);
+                cell.innerHTML = word[letter];
+                grid[`${xcounter},${i}`] = word[letter];
+                cellsUsed.push(`cell-${xcounter},${i}`);
+                placedWordPos.push(`cell-${xcounter},${i}`);
+                letter++;
+                xcounter--;
+            }
+            key = placedWordPos.join('.');
+            posWord[key] = oldWord.trim();
+            break;
+        case 'upleft':
+            xyWL = Number(x) - wordLength; // You can use xyWL if x and y change at the same rate and in the same direction
+            letter = 0;
+            for (let i = x; i > xyWL; i--) {
+                ythLetter = Number(y) + letter;
+                console.log(`cell-${i},${ythLetter}`);
+
+                cell = document.getElementById(`cell-${i},${ythLetter}`);
+                cell.innerHTML = word[letter];
+                grid[`${i},${ythLetter}`] = word[letter];
+                cellsUsed.push(`cell-${i},${ythLetter}`);
+                placedWordPos.push(`cell-${i},${ythLetter}`);
+                letter++;
+            }
+            key = placedWordPos.join('.');
+            posWord[key] = oldWord.trim();
+            break;
+        case 'upright':
+            xWL = Number(x) + wordLength; // x reduces, y increases
+            yWL = Number(y) - wordLength;
+            let ycounter = Number(y);
+            letter = 0;
+            for (let i = x; i < xWL; i++) {
+                cell = document.getElementById(`cell-${i},${ycounter}`);
+                cell.innerHTML = word[letter];
+                grid[`${i},${ycounter}`] = word[letter];
+                cellsUsed.push(`cell-${i},${ycounter}`);
+                placedWordPos.push(`cell-${i},${ycounter}`);
+                letter++;
+                ycounter--;
             }
             key = placedWordPos.join('.');
             posWord[key] = oldWord.trim();
@@ -379,7 +561,6 @@ function crossWord (amountOfWords) {
             listOfWords.push(wordChoice);
         }
     }
-    console.log("List of the words: ", listOfWords);
 
     for (let index = 0; index < listOfWords.length; index++) {
         const word = listOfWords[index];
@@ -494,6 +675,7 @@ function handleMouseUp() {
 
     // Check if selected cells form a stored word (you need to implement this logic)
     const foundWord = checkForWord(selectedCellIDs);
+    // const foundWord = true;
 
     if (foundWord) {
         // Add the 'foundit' class to the selected cells
@@ -528,14 +710,14 @@ function checkForWord(selectedCellIDs) {
     // Return true if a word is found, false otherwisereturn false;
     if (keyToCheck in posWord) {
         strikeWord(posWord[keyToCheck]);
-        displayTinyPopup(randomChoice(successMessages), 2);
+        displayTinyPopup(randomChoice(successMessages), 3);
         wordsStillHidden--;
         runWhenAllWordsFound();
         return true;
     } else if (cellIDNoDups.length > 2) {
         // Put in a failure toast: Oops, you might have found a word, but I didn't put it there. Here's a cookie 🍪
         console.log("CellIDs that caused a fail in check for word: ", cellIDNoDups);
-        displayTinyPopup(randomChoice(failMessages), 2);
+        displayTinyPopup(randomChoice(failMessages), 3);
         return false;
     }    
 }
@@ -626,9 +808,25 @@ function clean () {
     indexOfLastDeletedWord = null;
 }
 
+function colourCell (cellRef) {
+    const cell = document.getElementById(cellRef);
+    cell.style.backgroundColor = 'red';
+}
+
 // Build the table and run the crossword generator when the page loads
 tableBuilder(tableColumns, tableRows);
 crossWord(optimalAmountOfWords(sideLength));
+// crossWord(2);
+
+const playAgainButton = document.getElementById('playAgain');
+const playLaterButton = document.getElementById('playLater');
+// Add event listeners to the playAgain and playLater buttons
+playAgainButton.addEventListener('click',() => {
+    playAgain();
+});
+playLaterButton.addEventListener('click',() => {
+    playLater();
+});
 
 // TODO:
 // x Add the click highlight function
@@ -645,8 +843,8 @@ crossWord(optimalAmountOfWords(sideLength));
 // x Create a function that calculates the optimal amount of words there should be hidden. Sort of a density calculation depending on the sqaure area.
 // x Add a function that removes duplicate words
 // x Add the function that displays the words you need to find on the right side of the grid
-// - Add the diagonal word adding and bounds calculations
-// - Add function where random words can start from other words' letters
+// x Add the diagonal word adding and bounds calculations
+// x Add function where random words can start from other words' letters
 // x Add the function that keeps words selected when they're found and strikethrough's the word in the word box
 // - Figure out how to export and import function to make this main js file look neater
 // x Add function to stop trying to add a word if it can't fit after like 10 tries. Then choose a new word
@@ -659,4 +857,6 @@ crossWord(optimalAmountOfWords(sideLength));
 // - Add a hint system where you get one hint for every 4 words found
 // - Add a print system where you can print one or more word search puzzle to a PDF
 // - Add themes that the user can choose from
+// - Make words more likely to cross
+// - Add function to make diagonal selection easier
 // x Fix bug where the playAgain will get triggered the amount of times the user has played the game after clicking the playAgain button
