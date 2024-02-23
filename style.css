@@ -20,7 +20,10 @@ html {
 #word-box {
     margin-left: 25px;
     min-width: 120px;
-    max-width: 200px;
+    max-width: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 #word-box li {
@@ -29,6 +32,7 @@ html {
     text-overflow: ellipsis;
     list-style: none;
     margin-bottom: 5px;
+    flex-basis: calc(50% - 10px);
 }
 
 table {
