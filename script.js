@@ -1,10 +1,21 @@
-const sideLength = 21; // min 12, max 110, 21 is optimal for most screens
+const sideLength = 27; // min 12, max 110, 21 is optimal for most screens
 const areaPerWord = 26; // Reducing will make the words more dense, but can cause issues when the sideLength goes too low, 32 is optimal
 const tableRows = sideLength;
 const tableColumns = sideLength;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const words = ['Halibut', 'Lystrosaurus', 'Stonefish', 'Alligator', 'Dachshund', 'Kiwi', 'Rhinoceros', 'Tigerfish', 'Brachiosaurus', 'Yorkie', 'Wasp', 'Sheep', 'Wallaby', 'Armadillo', 'Guppy', 'Fossa', 'Anteosaurus', 'Anaconda', 'Jackal', 'Dalmatian', 'Llama', 'Goldfish', 'Shrimp', 'Emu', 'Hamster', 'Nightingale', 'Hawk', 'Kudu', 'Chinook', 'Pomeranian', 'Hummingbird', 'Civet', 'Lizard', 'Basset', 'Chihuahua', 'Falcon', 'Heron', 'Eel', 'Quagga', 'Elephant', 'Anteater', 'Doberman', 'Grouper', 'Megalodon', 'Jaguar', 'Raccoon', 'Prawn', 'Goldeneye', 'Dragonfly', 'Quail', 'Caracal', 'Butterfly', 'Limpet', 'Bat', 'Jellyfish', 'Reindeer', 'Cow', 'Triggerfish', 'Panther', 'Axolotl', 'Stingray', 'Frigatebird', 'Titanoboa', 'Alsatian', 'Peacock', 'Ant', 'Anglerfish', 'Mockingbird', 'Ragamuffin', 'Bowfin', 'Puma', 'Labrador', 'Tuna', 'Herring', 'Bluegill', 'Sparrow', 'Gerbil', 'Porcupine', 'Wolf', 'Mamba', 'Hornbill', 'Foxhound', 'Impala', 'Yak', 'Pelican', 'Blobfish', 'Pachycephalosaurus', 'Gazelle', 'Robin', 'Toad', 'Marmoset', 'Ragdoll', 'Crab', 'Crayfish', 'Warbler', 'Gecko', 'Kingfisher', 'Monitor', 'Bluebird', 'Bird', 'Beaver', 'Turtle', 'Malamute', 'Springbok', 'Archerfish', 'Boerboel', 'Seagull', 'Dolphin', 'Baboon', 'Siamese', 'Goat', 'Monkey', 'Ladybug', 'Shark', 'Schnauzer', 'Bandicoot', 'Firefly', 'Amargasaurus', 'Warthog', 'Starling', 'Shepherd', 'Stork', 'Pug', 'Walrus', 'Bison', 'Carp', 'Parakeet', 'Puffin', 'Bluefish', 'Swordfish', 'Tortoise', 'Shrew', 'Moth', 'Angelfish', 'Ape', 'Platypus', 'Mastiff', 'Mandrill', 'Roadrunner', 'Serval', 'Dog', 'Ceratosaurus', 'Mackerel', 'Cougar', 'Newt', 'Wildebeest', 'Chicken', 'Abyssinian', 'Bee', 'Allosaurus', 'Klipspringer', 'Lion', 'Masiakasaurus', 'Centipede', 'Lemur', 'Duck', 'Moose', 'Seahorse', 'Starfish', 'Styracosaurus', 'Maltese', 'Clownfish', 'Pointer', 'Sphynx', 'Brontosaurus', 'Hyena', 'Sloth', 'Boomslang', 'Wolverine', 'Catfish', 'Deer', 'Bass', 'Adder', 'Pangolin', 'Seal', 'Narwhal', 'Elasmosaurus', 'Bullfrog', 'Cobra', 'Oxpecker', 'Sparrowhawk', 'Mauzer', 'Cheetah', 'Egret', 'Camel', 'Badger', 'Bloodhound', 'Lobster', 'Lionfish', 'Ibex', 'Kangaroo', 'Hippopotamus', 'Meerkat', 'Donkey', 'Krill', 'Eagle', 'Antelope', 'Mole', 'Hornet', 'Giraffe', 'Squid', 'Beetle', 'Burmese', 'Snake', 'Koala', 'Scorpion', 'Flycatcher', 'Bear', 'Mongrel', 'Caterpillar', 'Octopus', 'Dingo', 'Wombat', 'Viper', 'Swan', 'Barracuda', 'Cockatoo', 'Hainosaurus', 'Mammoth', 'Dodo', 'Buffalo', 'Raven', 'Capybara', 'Canary', 'Swallow', 'Bulldog', 'Rat', 'Tapir', 'Flamingo', 'Lyrebird', 'Human', 'Koi', 'Cricket', 'Pufferfish', 'Possum', 'Siberian', 'Nautilus', 'Orangutan', 'Panda', 'Hedgehog', 'Beagle', 'Weasel', 'Whale', 'Penguin', 'Sardines', 'Hare', 'Rattlesnake', 'Piranha', 'Vulture', 'Tiger', 'Firehawk', 'Haddock', 'Mule', 'Pterodactyl', 'Kookaburra', 'Bobcat', 'Velociraptor', 'Gopher', 'Bully', 'Otter', 'Fish', 'Bullmastiff', 'Bullsnake', 'Chameleon', 'Trout', 'Sailfish', 'Iguana', 'Liger', 'Sturgeon', 'Tarantula', 'Poodle', 'Ray', 'Ostrich', 'Mongoose', 'Goose', 'Magpie', 'Anchovies', 'Terrier', 'Elk', 'Boa', 'Yellowfin', 'Codfish', 'Fox', 'Marlin', 'Ibis', 'Woodpecker', 'Sheepdog', 'Gorilla', 'Collie', 'Ferret', 'Jackrabbit', 'Copperhead', 'Barosaurus', 'Leopard', 'Pig', 'Bumblebee', 'Spaniel', 'Lynx', 'Frog', 'Ocelot', 'Greyhound', 'Cassowary', 'Pheasant', 'Chipmunk', 'Cockroach', 'Caribou', 'Cockle', 'Retriever', 'Oyster', 'Fowl', 'Hoopoe', 'Hartebeest', 'Dilophosaurus', 'Labradoodle', 'Cicada', 'Mantis', 'Rabbit', 'Buzzard', 'Grasshopper', 'Macaw', 'Mouse', 'Kingklip', 'Parrotfish', 'Squirrel', 'Waterbuck', 'Chilesaurus', 'Wildcat', 'Perch', 'Okapi', 'Mosasaurus', 'Skunk', 'Zebra', 'Earthworm', 'Puffer', 'Nguni', 'Sunfish', 'Manatee', 'Cryolophosaurus', 'Chinchilla', 'Parrot', 'Horse', 'Swallowtail', 'Chimpanzee', 'Albatross', 'Snail', 'Aardvark', 'Cockatiel', 'Nyala', 'Whippet', 'Coyote', 'Alpaca', 'Boxer', 'Fisher', 'Hound', 'Toucan', 'Crane', 'Capuchin', 'Angelshark', 'Crocodile', 'Owl', 'Eland', 'Turkey', 'Kakapo', 'Husky', 'Cat', 'Magyarosaurus', 'Salamander', 'Marmot', 'Rottweiler', 'Cottonmouth', 'Pigeon', 'Cod', 'Python', 'Osprey', 'Salmon', 'Crow'];
+
 const directions = ['upright', 'downright', 'downleft', 'upleft', 'right', 'down', 'left', 'up'];
+const colorNames = {
+    'gunmetal-lightskyblue': ["#092327", "#0a3b3c", "#0b5351", "#067e7b", "#00a9a5", "#27959f", "#4e8098", "#6fa1c0", "#90c2e7"],
+    'champagnepink-africanviolet': ["#cfb9ab", "#dcc2b9", "#d0ada7", "#bf8c8a", "#ad6a6c", "#854c59", "#5d2e46", "#895e7e", "#b58db6"],
+    'auburn-chocolatecosmos': ["#a62639", "#b4293e", "#c12c43", "#db324d", "#ba384e", "#993e4e", "#a64a5d", "#b3566c", "#511c29"],
+    'gunmetal-tearose': ["#2f323a", "#53445a", "#77567a", "#9e689d", "#c47ac0", "#d48cc1", "#e39ec1", "#e1acc1", "#debac0"],
+    'sunglow-salmon': ["#ffd25a", "#ffc85a", "#ffbe5a", "#ffb45a", "#ffaa5a", "#ff9e5a", "#ff915a", "#ff785a", "#ff8469"],
+    'ashgray-recedagreen': ["#bac7be", "#bed4c0", "#8da88d", "#a0d7a4", "#7dcd85", "#7fbc84", "#80ab82", "#7c987a", "#778472"],
+    'silver-paynesgray': ["#c6c5b9", "#adb9b3", "#94acac", "#7b9fa5", "#62929e", "#5f8896", "#5b7e8d", "#587484", "#546a7b"]
+};
+const paletteNames = ['gunmetal-lightskyblue', 'champagnepink-africanviolet', 'auburn-chocolatecosmos', 'gunmetal-tearose', 'sunglow-salmon', 'ashgray-recedagreen', 'silver-paynesgray'];
 let cellsUsed = [];
 let lettersRevealed = [];
 let grid = {};
@@ -19,9 +30,11 @@ let listOfWords = [];
 let wordObject = {};
 let indexOfLastDeletedWord;
 let mouseDragDirection = null;
+let currentPalette;
+let shouldRotate = false;
 
 class Word {
-    constructor (wordInput) {
+    constructor(wordInput) {
         this.word = wordInput;
         this.wordLength = this.word.length;
         this.dir = randomChoice(directions)
@@ -29,7 +42,7 @@ class Word {
         this.startPoint = this.findStartPoint();
     }
 
-    chooseNewWord () {
+    chooseNewWord() {
         this.word = randomChoice(words);
         console.log('Chose a new word: ', this.word);
     }
@@ -68,18 +81,18 @@ class Word {
         }
         // If unable to find a suitable spot, choose a new word
         this.word = this.changeWord(); // Choose a new word
-        
+
         this.startPointBounds = boundCalculator(this.dir, this.wordLength); // Recalculate bounds
         return this.findStartPoint(); // Recursively try again with new word
     }
 }
 
-function optimalAmountOfWords (sideLength) {
-    let area = sideLength**2;
-    return Math.round(area/areaPerWord);
+function optimalAmountOfWords(sideLength) {
+    let area = sideLength ** 2;
+    return Math.round(area / areaPerWord);
 }
 
-function tableBuilder (tableColumns, tableRows) {
+function tableBuilder(tableColumns, tableRows) {
     const table = document.getElementById('crossword-grid');
     let newRow;
     let newRowID;
@@ -118,13 +131,13 @@ function tableBuilder (tableColumns, tableRows) {
     }
 }
 
-function addCellClickListener (newCell) {
+function addCellClickListener(newCell) {
     newCell.addEventListener("click", () => {
         newCell.classList.toggle('clicked');
     });
 }
 
-function randomChoice (input) {
+function randomChoice(input) {
     let choice;
     if (typeof input == 'number') {
         choice = Math.floor(Math.random() * input);
@@ -135,7 +148,7 @@ function randomChoice (input) {
     return choice;
 }
 
-function boundCalculator (dir, wordLength) {
+function boundCalculator(dir, wordLength) {
     let bounds = {
         start: {
             x: 0,
@@ -222,7 +235,7 @@ function startPointFinder(startPointBounds, wordLength, dir, word) {
             possibleCells[`${x},${y}`] = grid[`${x},${y}`];
             choiceArray.push(`${x},${y}`);
         }
-        
+
     }
 
     // console.log(`The cells we can choose from for ${word}: `,choiceArray);
@@ -249,7 +262,7 @@ function startPointFinder(startPointBounds, wordLength, dir, word) {
     return legalStartPoint;
 }
 
-function findGoodSpot (startPoint, wordLength, dir, word) {
+function findGoodSpot(startPoint, wordLength, dir, word) {
     let [x, y] = startPoint.split(',');
     let xWL;
     let yWL;
@@ -393,7 +406,7 @@ function findGoodSpot (startPoint, wordLength, dir, word) {
     });
 }
 
-function findEmptyPos (choiceArray, possibleCells, word) {
+function findEmptyPos(choiceArray, possibleCells, word) {
     let randEmpty = false;
     let pos;
     let emptyPos;
@@ -407,7 +420,7 @@ function findEmptyPos (choiceArray, possibleCells, word) {
     return emptyPos;
 }
 
-function placeWord (startPoint, dir, oldWord) {
+function placeWord(startPoint, dir, oldWord) {
     // console.log(oldWord);
     if (oldWord == undefined) {
         oldWord = listOfWords[indexOfLastDeletedWord];
@@ -547,7 +560,7 @@ function placeWord (startPoint, dir, oldWord) {
     }
 }
 
-function crossWord (amountOfWords) {
+function crossWord(amountOfWords) {
     wordsStillHidden = amountOfWords;
 
     while (listOfWords.length < amountOfWords) {
@@ -569,7 +582,7 @@ function crossWord (amountOfWords) {
     emptySpaceFiller();
 }
 
-function emptySpaceFiller () {
+function emptySpaceFiller() {
     for (let key in grid) {
         if (grid[key] == '') {
             cell = document.getElementById(`cell-${key}`);
@@ -578,14 +591,14 @@ function emptySpaceFiller () {
     }
 }
 
-function reveal5Seconds () {
+function reveal5Seconds() {
     reveal();
     setTimeout(() => {
         unReveal();
     }, 5000);
 }
 
-function reveal () {
+function reveal() {
     for (let keyIndex in cellsUsed) {
         let cell = document.getElementById(cellsUsed[keyIndex]);
         cell.style.backgroundColor = 'crimson';
@@ -594,12 +607,46 @@ function reveal () {
     }
 }
 
-function unReveal () {
+function revealbyWord(paletteName) {
+    currentPalette = paletteName;
+    console.log(paletteName)
+
+    // For every word in the grid
+    for (wordIndex in posWord) {
+        let wordColour = randomChoice(colorNames[paletteName]);
+        let wordspace = []
+        wordspace = wordIndex.split('.')
+
+        // For every letter in the word
+        for (let keyIndex in wordspace) {
+            let cell = document.getElementById(wordspace[keyIndex]);
+            cell.style.backgroundColor = wordColour;
+            cell.style.color = 'white';
+            lettersRevealed.push(cellsUsed[keyIndex]);
+        }
+    }
+}
+
+function switchPalette() {
+    let paletteIndex = paletteNames.indexOf(currentPalette);
+    let newPaletteIndex;
+    if (paletteIndex == paletteNames.length - 1) {
+        newPaletteIndex = 0;
+    } else {
+        newPaletteIndex = paletteIndex + 1;
+    }
+
+    revealbyWord(paletteNames[newPaletteIndex]);
+}
+
+function unReveal() {
     if (lettersRevealed.length !== 0) {
+        console.log(`Amount of letters revealed: ${lettersRevealed.length}`)
         for (let i in lettersRevealed) {
             let cell = document.getElementById(lettersRevealed[i]);
-            cell.style.backgroundColor = '';
+            cell.style.backgroundColor = 'white';
             cell.style.color = 'black';
+            console.log('unrevealed')
         }
 
         lettersRevealed = [];
@@ -608,7 +655,7 @@ function unReveal () {
     }
 }
 
-function hideClicked () {
+function hideClicked() {
     let cells = document.querySelectorAll('.clicked');
 
     cells.forEach((cell) => {
@@ -616,7 +663,7 @@ function hideClicked () {
     });
 }
 
-function displayWordsToFind (listOfWords) {
+function displayWordsToFind(listOfWords) {
     const wordBox = document.getElementById('word-box');
     let newListItemID;
 
@@ -629,7 +676,7 @@ function displayWordsToFind (listOfWords) {
     }
 }
 
-function capitalize (word) {
+function capitalize(word) {
     let firstLetter = word[0].toUpperCase();
     let wordArray = word.split('');
     wordArray.splice(0, 1, firstLetter);
@@ -714,7 +761,7 @@ function handleMouseUp() {
     mouseDragDirection = null;
 }
 
-function whichDirection (startCellID, secondCellID) {
+function whichDirection(startCellID, secondCellID) {
     let splitStart = startCellID.split('-');
     let [startx, starty] = splitStart[1].split(',');
 
@@ -724,7 +771,7 @@ function whichDirection (startCellID, secondCellID) {
     // Calculate differences in X and Y coordinates
     const deltaX = endx - startx;
     const deltaY = endy - starty;
-    
+
     // Determine the direction based on the differences
     let directionDragged;
     if (deltaX === 0 && deltaY === 0) {
@@ -738,13 +785,13 @@ function whichDirection (startCellID, secondCellID) {
     } else {
         directionDragged = "unknown"; // Unknown or invalid movement
     }
-    
+
     // console.log(`Direction dragged: ${directionDragged}`);
 
     return directionDragged;
 }
 
-function sameDirection (cellID) {
+function sameDirection(cellID) {
     // The latest cell must be compared to the previous cell and then compared to mouseDragDirection
 
     // Get the cellID of the previous selected cell (aka the latest one in the selected cells array)
@@ -760,7 +807,7 @@ function sameDirection (cellID) {
     }
 }
 
-function removeDups (array) {
+function removeDups(array) {
     let newArrayNoDups = [];
 
     for (let index in array) {
@@ -791,28 +838,28 @@ function checkForWord(selectedCellIDs) {
         // console.log("CellIDs that caused a fail in check for word: ", cellIDNoDups);
         displayTinyPopup(randomChoice(failMessages), 3);
         return false;
-    }    
+    }
 }
 
-function strikeWord (word) {
+function strikeWord(word) {
     let listElement = document.getElementById(`${word}`);
     listElement.classList.add('struckthrough');
 }
 
 function displayTinyPopup(message, time) {
-	// Display the popup
+    // Display the popup
     let popup = document.getElementById('tiny-popup');
     popup.innerHTML = message;
-	popup.style.display = 'block';
+    popup.style.display = 'block';
 
     let millis = time * 1000;
 
-	setTimeout(() => {
-		popup.style.display = 'none';
-	}, millis);
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, millis);
 }
 
-function runWhenAllWordsFound () {
+function runWhenAllWordsFound() {
     if (wordsStillHidden == 0) {
         setTimeout(() => {
             showConfirmationPopup('Congratulations!');
@@ -837,7 +884,7 @@ function hideConfirmationPopup() {
 }
 
 // Function to play another round
-function playAgain () {
+function playAgain() {
     hideConfirmationPopup();
     // Clean die crossword-grid en die word-box met die cleaner function
     clean();
@@ -850,7 +897,7 @@ function playAgain () {
 }
 
 // Function to play later and add button
-function playLater () {
+function playLater() {
     hideConfirmationPopup();
     // Add a button to the page that the user can click to play again, do this with a function and make it disappear when the user clicks the button. When the button is clicked it must show the confirmation popup.
     let anotherButton = document.getElementById('anotherOne');
@@ -862,14 +909,14 @@ function playLater () {
     });
 }
 
-function clean () {
+function clean() {
     // Get the table and then get the word box
     const table = document.getElementById('crossword-grid');
     const wordBox = document.getElementById('word-box');
 
     // Clean these objects
-    table.innerHTML = null;
-    wordBox.innerHTML = null;
+    table.innerHTML = "";
+    wordBox.innerHTML = "";
 
     // Clean the arrays and vars too
     cellsUsed = [];
@@ -880,29 +927,84 @@ function clean () {
     indexOfLastDeletedWord = null;
 }
 
-function colourCell (cellRef) {
+function colourCell(cellRef) {
     const cell = document.getElementById(cellRef);
     cell.style.backgroundColor = 'red';
+}
+
+function takeScreenshot() {
+    html2canvas(document.querySelector("#mainbox")).then(canvas => {
+        // Copy canvas to blob with specified MIME type
+        canvas.toBlob(blob => {
+            // Create ClipboardItem with blob and its type, and add to an array
+            const data = [new ClipboardItem({ [blob.type]: blob })];
+            // Write the data to the clipboard
+            navigator.clipboard.write(data);
+            displayTinyPopup('Screenshot copied to clipboard!', 3);
+        });
+    });
+}
+
+function rotate (secondsPerRotation) {
+    shouldRotate = !shouldRotate; // Switches the shouldRotate value
+    console.log(`${shouldRotate ? 'Rotating' : 'Stopped Rotating'}`);
+
+    let screenshotbutton = document.getElementById("screenshot-btn");
+    if (shouldRotate) {
+        // Remove the screenshot button from the display
+        screenshotbutton.style.display = 'none';
+    } else {
+        // Re-add the screenshot button to the display
+        screenshotbutton.style.display = 'inline-block';
+    }
+
+    if (shouldRotate) {
+        rotateLoop(secondsPerRotation);
+    }
+}
+
+function rotateLoop(secondsPerRotation) {    
+    // Define a function for rotating once
+    const rotateOnce = () => {
+        clean();
+        tableBuilder(tableColumns, tableRows);
+        crossWord(words.length);
+        revealbyWord(randomChoice(paletteNames));
+        console.log('Waiting');
+
+        // Schedule the next rotation after secondsPerRotation seconds
+        setTimeout(() => {
+            if (shouldRotate) {
+                rotateLoop(secondsPerRotation);
+            }
+        }, secondsPerRotation * 1000);
+    };
+
+    // Start rotating
+    if (shouldRotate) {
+        rotateOnce();
+    }
 }
 
 // Build the table and run the crossword generator when the page loads
 tableBuilder(tableColumns, tableRows);
 crossWord(optimalAmountOfWords(sideLength));
-// crossWord(2);
+// crossWord(words.length);
+// revealbyWord(randomChoice(paletteNames));
 
 const playAgainButton = document.getElementById('playAgain');
 const playLaterButton = document.getElementById('playLater');
 // Add event listeners to the playAgain and playLater buttons
-playAgainButton.addEventListener('click',() => {
+playAgainButton.addEventListener('click', () => {
     playAgain();
 });
-playLaterButton.addEventListener('click',() => {
+playLaterButton.addEventListener('click', () => {
     playLater();
 });
 
 // TODO:
 // x Add the click highlight function
-// x Add the click and drag function 
+// x Add the click and drag function
 // x Add the functionality that words cannot overlap
 // x Add the left and up functions as well, don't reverse the words!
 // x Add a wordPositions object with all the positions of the words. Or maybe don't return an array, but make all the positions a unique key and then let the clickDrag function make a key for the dragged word and search for this key in the wordPositions Array.
@@ -928,7 +1030,12 @@ playLaterButton.addEventListener('click',() => {
 // x Fix bug where multiple another one buttons appear if you just keep clicking no, it's okay - instead of deleting and creating the button, put it in html and change the display property
 // - Add a hint system where you get one hint for every 4 words found
 // - Add a print system where you can print one or more word search puzzle to a PDF
+// x Add a screenshot function that saves the wordsearch puzzle as an image to your clipboard
 // - Add themes that the user can choose from
-// - Make words more likely to cross
-// - Add function to make diagonal selection easier
+// x Make words more likely to cross
+// x Add function to make diagonal selection easier
 // x Fix bug where the playAgain will get triggered the amount of times the user has played the game after clicking the playAgain button
+// x Add the ability for the reveal function to use random colours, never the same colour once. Get a list of CSS colours- Fix this
+// x Fix unReveal bug after you've used a revealbbyword function. For some reason it only unreveals some letters?
+// - Add a function to save a puzzle, import / export
+// - Adjust CSS so the words only wrap to new column once higher than table

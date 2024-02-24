@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrossyWord</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
@@ -28,6 +29,9 @@
         <button class="btn" id="playLater">No, it's okay</button>
     </div>
 
+    <!-- Screenshot button -->
+    <button id="screenshot-btn" class="screenshot-btn" onclick="takeScreenshot()">Screenshot</button>
+
     <!-- Tiny popup Code -->
     <div id="tiny-popup" class="toast-popup"></div>
 
@@ -35,5 +39,6 @@
     <div class="overlay" id="overlay"></div>
 
     <script src="script.js"></script>
+    <script src="html2canvas.js"></script>
 </body>
 </html>
