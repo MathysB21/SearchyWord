@@ -45,6 +45,13 @@ html {
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    transition: all 0.25s ease-in-out;
+}
+
+.screenshot-btn:hover {
+    cursor: pointer;
+    background-color: #f6f6f6;
+    border: 1px solid #686868;
 }
 
 table {
